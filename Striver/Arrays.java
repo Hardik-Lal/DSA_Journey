@@ -322,11 +322,122 @@ public class Arrays {
         }
         System.out.print(longest);
     }
-    public static void array19(int arr[]) {
+    public static void array19(int arr[][]) {
+        int n = arr.length;
+        int m = arr[0].length;
+        int[] ros = new int[n];
+        int[] cols = new int[m];
 
+        // Mark rows and columns containing 0
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (arr[i][j] == 0) {
+                    ros[i] = 1;
+                    cols[j] = 1;
+                }
+            }
+        }
+        // Set elements to 0
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (ros[i] == 1 || cols[j] == 1) {
+                    arr[i][j] = 0;
+                }
+            }
+        }
+        // Print the matrix
+        System.out.println("The Result Matrix is: ");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+}
+    public static void array20(int arr[][]) {
+        int rows = arr.length;
+        int columns = arr[0].length;
+        int temp = 0 ;
+        for(int i = 0; i < rows; i++) {
+            for(int j = i + 1; j < columns; j++) {
+                temp = arr[i][j] ;
+                arr[i][j] = arr[j][i] ;
+                arr[j][i] = temp ;
+             }
+        }
+        int swap = 0 ;
+        for(int i = 0; i < rows; i++) {
+            int left = 0 ;
+            int right = columns - 1;
+            while(left < right) {
+                swap = arr[i][left];
+                arr[i][left] = arr[i][right];
+                arr[i][right] = swap;
+                left++;
+                right--;
+            }
+        }
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
+    public static void array21(int arr[][]) {
+        int rows = arr.length;
+        int columns = arr[0].length;
 
-    public static void main(String[] args) {
+        int left = 0;
+        int right = columns - 1;
+        int top = 0;
+        int bottom = rows - 1;
+        while (top <= bottom && left <= right) {
+            for (int i = left; i <= right; i++) {
+                System.out.print(arr[top][i] + " ");
+            }
+            top++;
+            for (int i = top; i <= bottom; i++) {
+                System.out.print(arr[i][right] + " ");
+            }
+            right--;
+            if (top <= bottom) {
+                for (int i = right; i >= left; i--) {
+                    System.out.print(arr[bottom][i] + " ");
+                }
+                bottom--;
+            }
+            if (left <= right) {
+                for (int i = bottom; i >= top; i--) {
+                    System.out.print(arr[i][left] + " ");
+                }
+                left++;
+            }
+        }
+    }
+    public static void array22(int arr[]) {
+        Scanner sc = new Scanner(System.in) ;
+        System.out.print("Enter the target: ");
+        int target = sc.nextInt();
+        int len = arr.length ;
+        int count = 0;
+        HashMap<Integer, Integer> mc = new HashMap<>() ;
+        mc.put(0, arr[0]) ;
+        for(int i = 1; i < len; i++) {
+            if(arr[i] + mc.get(i-1) < target) {
+                mc.put(i, (arr[i] + mc.get(i-1))) ;
+            }
+            if(arr[i] + mc.get(i-1) > target) {
+                mc.put(i, arr[i]) ;
+            }
+            if(arr[i] == target) {
+                count++ ;
+            }
+        }
+        System.out.print(count);
+    }
+    public static void main(String[]args){
+//        For 1d array
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter the number of elements: ");
         int n = sc.nextInt();
@@ -335,6 +446,19 @@ public class Arrays {
         for(int i = 0; i < n; i++) {
             arr[i] = sc.nextInt() ;
         }
-        array18(arr);
+
+//      For 2d array
+//        Scanner sc = new Scanner(System.in);
+//        System.out.print("Enter the number of rows and columns:");
+//        int rows = sc.nextInt();
+//        int columns = sc.nextInt();
+//        int arr[][] = new int[rows][columns];
+//        System.out.print("Enter the elements: ");
+//        for (int i = 0; i < rows; i++) {
+//            for (int j = 0; j < columns; j++) {
+//                arr[i][j] = sc.nextInt();
+//            }
+//        }
+        array22(arr);
     }
 }
